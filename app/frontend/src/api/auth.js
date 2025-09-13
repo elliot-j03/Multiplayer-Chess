@@ -20,6 +20,7 @@ export async function userLogin (email, password) {
 }
 
 export async function userCreate (username, email, password) {
+    
     const response = await fetch(userCreatePath,
         {
             method: "POST",

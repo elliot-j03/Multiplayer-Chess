@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 function HomePage () {
     // Variables
     const authPath = "/auth";
-    const profilePath = "/profile"
+    const profilePath = "/profile";
+    const gamePath = "/game";
     const navigate = useNavigate();
 
     function searchForGame () {
@@ -19,6 +20,7 @@ function HomePage () {
             </div>
             <h1>Chess game</h1>
             <button onClick={searchForGame}>Search for game</button>
+            <button onClick={() => navigate(gamePath)}>go to game page</button>
         </>
     )
 }
