@@ -13,7 +13,7 @@ function GamePage () {
         <>
             <h1>Game Board</h1>
             <button onClick={() => navigate(homePath)}>Home</button>
-            <GameBoard />
+            <GameBoard boardType={"white"}/>
         </>
     )
 }
