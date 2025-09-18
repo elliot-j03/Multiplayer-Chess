@@ -1,3 +1,5 @@
+// API
+import { sendPieceMove } from "../api/game";
 // React
 import { useNavigate } from "react-router-dom";
 // Components
@@ -13,7 +15,7 @@ function GamePage () {
         <>
             <h1>Game Board</h1>
             <button onClick={() => navigate(homePath)}>Home</button>
-            <GameBoard boardType={"white"}/>
+            <GameBoard boardType={"white"} onPieceMove={sendPieceMove}/>
         </>
     )
 }

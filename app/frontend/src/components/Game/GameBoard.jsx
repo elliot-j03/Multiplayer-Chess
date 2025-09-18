@@ -1,33 +1,30 @@
 // React
-import { useEffect, useState } from "react";
+import { useState } from "react";
 // Components
 import BoardRow from "./BoardRow";
-import Pawn from "./Pawn";
+import { startingBoardState } from "./BoardData";
 
 
-const startingBoardState = {
-    "a2": <Pawn/>
-};
-
-
-function GameBoard ({ boardType }) {
+function GameBoard ({ boardType, onPieceMove }) {
     // Variables
     const [boardState, setBoardState] = useState(startingBoardState);
     const [selectedTile, setSelectedTile] = useState("");
 
 
-    function handleTileClick (tileID) {
+    async function handleTileClick (newTileID) {
         if (selectedTile !== "") {
-            const tileNum = Number(selectedTile[1]) + 1;
-            const validTile = selectedTile[0] + tileNum.toString();
-
-            if (boardState[selectedTile]?.type === Pawn && tileID === validTile) {
-                setBoardState(prev => ({...prev, [tileID]: <Pawn />, [selectedTile]: undefined}));
+            // Logic on previously selected tile
+            const moveResponse = await onPieceMove(boardState, selectedTile, newTileID);
+            console.log("CHANGE: " + moveResponse?.change);
+            if (moveResponse?.change === true) {
+                setBoardState(moveResponse.state);
             }
+
 
             setSelectedTile("");
         } else {
-            setSelectedTile(tileID);
+            // Selecting a tile
+            setSelectedTile(newTileID);
         }
     }
 
