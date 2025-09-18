@@ -1,15 +1,18 @@
-function BoardTile({ tileType, tileNum, tileLetter, piece, onTileSelect }) {
+function BoardTile({ tileType, tileNum, tileLetter, piece, onTileSelect, selectedTile }) {
+    // Variables
+    const tileID = tileLetter + tileNum
 
     return (
         <div className={`board-tile ${tileType === "dark" ? "dark" : ""}`}
-            onClick={() => onTileSelect(tileLetter+tileNum)}>
+            onClick={() => onTileSelect(tileID)}
+            style={{ backgroundColor: (selectedTile === tileID ? "#c75656ff" : null)}}>
             {piece !== undefined ? piece : null}
         </div>
     );
 }
 
 
-function BoardRow ({ rowType, rowIndex, boardType, boardState, onTileSelect }) {
+function BoardRow ({ rowType, rowIndex, boardType, boardState, onTileSelect, selectedTile }) {
     // Variables
     const tileLetters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
@@ -25,9 +28,11 @@ function BoardRow ({ rowType, rowIndex, boardType, boardState, onTileSelect }) {
                     tileNum={tileNum}
                     tileLetter={tileLetter}
                     piece={boardState[tileID]}
-                    onTileSelect={onTileSelect} />
+                    onTileSelect={onTileSelect}
+                    selectedTile={selectedTile} />
                 )
             })}
+            <p>{rowIndex}</p>
         </div>
     )
 }

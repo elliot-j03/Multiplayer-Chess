@@ -1,5 +1,5 @@
 // React
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // Components
 import BoardRow from "./BoardRow";
 import Pawn from "./Pawn";
@@ -13,11 +13,22 @@ const startingBoardState = {
 function GameBoard ({ boardType }) {
     // Variables
     const [boardState, setBoardState] = useState(startingBoardState);
-    const [selectedTile, setSelectedTile] = useState();
+    const [selectedTile, setSelectedTile] = useState("");
 
 
     function handleTileClick (tileID) {
-        setSelectedTile(tileID);
+        if (selectedTile !== "") {
+            const tileNum = Number(selectedTile[1]) + 1;
+            const validTile = selectedTile[0] + tileNum.toString();
+
+            if (boardState[selectedTile]?.type === Pawn && tileID === validTile) {
+                setBoardState(prev => ({...prev, [tileID]: <Pawn />, [selectedTile]: undefined}));
+            }
+
+            setSelectedTile("");
+        } else {
+            setSelectedTile(tileID);
+        }
     }
 
 
@@ -29,7 +40,8 @@ function GameBoard ({ boardType }) {
                 rowIndex={8 - i}
                 boardType={boardType}
                 boardState={boardState}
-                onTileSelect={handleTileClick} />
+                onTileSelect={handleTileClick}
+                selectedTile={selectedTile} />
             ))}
             </div>
             <p>selected tile: {selectedTile}</p>
