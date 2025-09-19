@@ -1,6 +1,6 @@
 const BASE_URL = import.meta.env.VITE_API_WS;
 // Paths
-const gameMovePath = `${BASE_URL}/game-socket`
+const gameMovePath = `${BASE_URL}/game/client-socket`
 
 
 var ws = new WebSocket(gameMovePath);

@@ -10,6 +10,7 @@ async def user_create(data: UserCreate):
     # Add to DB logic
     return {"username": data.username, "email": data.email}
 
+
 @auth_router.post("/auth/login")
 async def user_login(data: UserLogin):
     # Authenticate logic

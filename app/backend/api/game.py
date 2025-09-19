@@ -1,19 +1,24 @@
-from fastapi import WebSocket, APIRouter
 import json
-from services.chess_logic import move_auth, fen_to_json
+from fastapi import WebSocket, APIRouter
+from services.chess_logic import move_auth
+from api.schemas import RequestMatch
 
 
 game_router = APIRouter()
 
 
-@game_router.websocket("/game-socket")
+@game_router.post("/game/match-search")
+async def match_search(data: RequestMatch):
+    pass
+
+
+@game_router.websocket("/game/client-socket")
 async def game_socket(websocket: WebSocket):
     await websocket.accept()
     while True:
         data = await websocket.receive_text()
         data = json.loads(data)
         
-        # current_brd_state = dict(data["board_state"])
         prev_tile = data["prev_tile"]
         req_tile = data["req_tile"]
 

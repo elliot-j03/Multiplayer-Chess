@@ -2,21 +2,19 @@ import chess
 
 TILES: list = ["a", "b", "c", "d", "e", "f", "g", "h"]
 PIECE_MAP: dict = {
-        "P": ["pawn", "w"],
-        "K": ["king", "w"],
-        "Q": ["queen", "w"],
-        "R": ["rook", "w"],
-        "B": ["bishop", "w"],
-        "N": ["knight", "w"],
-        "p": ["pawn", "b"],
-        "k": ["king", "b"],
-        "q": ["queen", "b"],
-        "r": ["rook", "b"],
-        "b": ["bishop", "b"],
-        "n": ["knight", "b"]
-    }
-
-
+    "P": ["pawn", "w"],
+    "K": ["king", "w"],
+    "Q": ["queen", "w"],
+    "R": ["rook", "w"],
+    "B": ["bishop", "w"],
+    "N": ["knight", "w"],
+    "p": ["pawn", "b"],
+    "k": ["king", "b"],
+    "q": ["queen", "b"],
+    "r": ["rook", "b"],
+    "b": ["bishop", "b"],
+    "n": ["knight", "b"]
+}
 board = chess.Board()
         
 
