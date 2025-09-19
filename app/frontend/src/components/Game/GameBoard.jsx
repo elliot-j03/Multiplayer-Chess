@@ -14,14 +14,17 @@ function GameBoard ({ boardType, onPieceMove }) {
     async function handleTileClick (newTileID) {
         if (selectedTile !== "") {
             // Logic on previously selected tile
-            const moveResponse = await onPieceMove(boardState, selectedTile, newTileID);
-            console.log("CHANGE: " + moveResponse?.change);
-            if (moveResponse?.change === true) {
-                setBoardState(moveResponse.state);
+            try {
+                const moveResponse = await onPieceMove(selectedTile, newTileID);
+                console.log("CHANGE: " + moveResponse?.change);
+                if (moveResponse?.change === true) {
+                    setBoardState(moveResponse.state);
+                }
+                setSelectedTile("");
+            } catch (err) {
+                console.log("[ERROR] GameBoard.jsx/handleTileClick: " + err);
+                setSelectedTile("");
             }
-
-
-            setSelectedTile("");
         } else {
             // Selecting a tile
             setSelectedTile(newTileID);
