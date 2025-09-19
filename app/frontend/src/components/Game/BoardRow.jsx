@@ -8,10 +8,8 @@ function BoardTile({ tileType, tileNum, tileLetter, piece, onTileSelect, selecte
     return (
         <div className={`board-tile ${tileType === "dark" ? "dark" : ""}`}
             onClick={() => onTileSelect(tileID)}
-            style={{ backgroundColor: (selectedTile === tileID ? "#c75656ff" : null),
-                color: (piece !== undefined && piece !== null ? (piece[1] === "w" ? "#ffffff" : "#000000ff") : null)
-            }}>
-            {piece !== undefined && piece !== null ? <Piece pieceType={piece[0]} /> : null}
+            style={{ backgroundColor: (selectedTile === tileID ? "#c75656ff" : null) }}>
+            {piece !== undefined && piece !== null ? <Piece pieceType={piece[0]} pieceColour={piece[1]}/> : null}
         </div>
     );
 }
