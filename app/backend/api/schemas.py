@@ -20,5 +20,5 @@ class FriendAction(BaseModel):
 
 
 # Game Schemas
-class RequestMatch():
+class RequestMatch(BaseModel):
     client_uid: str

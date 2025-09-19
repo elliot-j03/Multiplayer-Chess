@@ -54,9 +54,15 @@ def move_auth(prev_tile: str, req_tile: str):
         print(f"[ERROR] chess_logic.py/move_auth: {e}")
         return None, False
 
+    # TODO: Fix inconsisten check state
+    is_check: bool = False
+    piece_moved: bool = False
     if move in board.legal_moves:
+        piece_moved = True
         board.push(move)
-
-        return fen_to_json(board.fen()), True
+        
+        if board.is_check():
+            is_check = True
+        return fen_to_json(board.fen()), piece_moved, is_check
     else:
-        return None, False
+        return None, piece_moved, is_check

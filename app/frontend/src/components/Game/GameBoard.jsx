@@ -9,6 +9,7 @@ function GameBoard ({ boardType, onPieceMove }) {
     // Variables
     const [boardState, setBoardState] = useState(startingBoardState);
     const [selectedTile, setSelectedTile] = useState("");
+    const [isCheck, setIsCheck] = useState(false);
 
 
     async function handleTileClick (newTileID) {
@@ -16,7 +17,11 @@ function GameBoard ({ boardType, onPieceMove }) {
             // Logic on previously selected tile
             try {
                 const moveResponse = await onPieceMove(selectedTile, newTileID);
+                
                 console.log("CHANGE: " + moveResponse?.change);
+                console.log("CHECK: " + moveResponse?.check);
+                setIsCheck(moveResponse?.check);
+
                 if (moveResponse?.change === true) {
                     setBoardState(moveResponse.state);
                 }
@@ -45,6 +50,7 @@ function GameBoard ({ boardType, onPieceMove }) {
             ))}
             </div>
             <p>selected tile: {selectedTile}</p>
+            <h1>{isCheck ? "Check!" : ""}</h1>
         </>
     )
 }

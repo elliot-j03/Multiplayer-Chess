@@ -22,7 +22,8 @@ async def game_socket(websocket: WebSocket):
         prev_tile = data["prev_tile"]
         req_tile = data["req_tile"]
 
-        new_board_state, change = move_auth(prev_tile, req_tile)
+        new_board_state, change, is_check = move_auth(prev_tile, req_tile)
         await websocket.send_text(json.dumps({
             "boardState": new_board_state,
-            "change": change }))
+            "change": change,
+            "isCheck": is_check }))

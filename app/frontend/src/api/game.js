@@ -22,7 +22,8 @@ export function sendPieceMove(previousTile, requestedTile) {
                 const data = JSON.parse(event.data);
                 const newBoardState = data.boardState;
                 const change = data.change;
-                resolve({ state: newBoardState, change: change });
+                const isCheck = data.isCheck;
+                resolve({ state: newBoardState, change: change, check: isCheck });
             }, { once: true });
         });
     } catch (err) {
