@@ -1,15 +1,12 @@
-// React
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 // API
 import { userLogin, userCreate } from "../api/auth";
+// React
+import { useState } from "react";
+// Components
+import Header from "../components/Misc/Header";
 
 
 function AuthPage () {
-    // Variables
-    const homePath = "/";
-    const navigate = useNavigate();
-
     const [username, setUsername] =  useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -46,6 +43,7 @@ function AuthPage () {
 
     return (
         <>
+            <Header />
             <h1>Login Page</h1>
             <div style={{ display: "flex", flexDirection: "column", width: "200px" }}>
                 <input onChange={(e) => setUsername(e.target.value)} placeholder="username" value={username}/>
@@ -54,7 +52,6 @@ function AuthPage () {
                 <button onClick={requestLogin}>Login</button>
                 <button onClick={requestCreateUser}>Create Account</button>
             </div>
-            <button onClick={() => navigate(homePath)}>Go Home</button>
         </>
     )
 }

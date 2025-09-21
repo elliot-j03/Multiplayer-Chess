@@ -2,7 +2,6 @@
 import Piece from "./Piece";
 
 function BoardTile({ tileType, tileNum, tileLetter, piece, onTileSelect, selectedTile }) {
-    // Variables
     const tileID = tileLetter + tileNum
 
     return (
@@ -16,7 +15,6 @@ function BoardTile({ tileType, tileNum, tileLetter, piece, onTileSelect, selecte
 
 
 function BoardRow ({ rowType, rowIndex, boardType, boardState, onTileSelect, selectedTile }) {
-    // Variables
     const tileLetters = ["a", "b", "c", "d", "e", "f", "g", "h"];
 
     return (
@@ -35,7 +33,7 @@ function BoardRow ({ rowType, rowIndex, boardType, boardState, onTileSelect, sel
                     selectedTile={selectedTile} />
                 )
             })}
-            <p>{rowIndex}</p>
+            {/* <p>{rowIndex}</p> */}
         </div>
     )
 }

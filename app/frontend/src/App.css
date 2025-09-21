@@ -1,6 +1,88 @@
+/* Variables */
+:root {
+  --button-prm: #2b9348;
+  --button-sec: #558360;
+  --secondary: #c4c5ba;
+  --tertiary: #a7a8a3;
+  --text: #222;
+  --border-radius: 5px;
+  --header-height: 100px;
+  /* User */
+  --usercard-height: 25rem;
+  /* Game Page */
+  --board-top-padding: 2rem;
+  --board-padding: 3rem;
+  --tile-dim: 70px;
+}
+
+/* Misc */
+header {
+  height: var(--header-height);
+  width: 100%;
+  background-color: var(--secondary);
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+button {
+  cursor: pointer;
+  background-color: var(--button-prm);
+  border: 1px solid var(--button-prm);
+  border-radius: var(--border-radius);
+  color: var(--text);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+button:hover {
+  border-color: var(--button-sec);
+}
+
+.menu-button-div {
+  width: 25px;
+  height: 2px;
+  background-color: var(--text);
+  margin: 2px 0;
+}
+
+/* User */
+.player-card {
+  background-color: var(--secondary);
+  padding: 1rem;
+  border-radius: var(--border-radius);
+  height: var(--usercard-height);
+}
+
+.pfp-container {
+  background-color: var(--tertiary);
+  padding: 0.5rem;
+  border-radius: calc(var(--border-radius) + 3px);
+}
+
+/* Game Board Page */
+.game-page {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.board-container {
+  padding-top: var(--board-top-padding);
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
 .board {
     display: flex;
     flex-direction: column;
+    padding: var(--board-padding);
+    background-color: var(--secondary);
+    border-radius: 6px;
 }
 
 .board-row {
@@ -9,8 +91,8 @@
 }
 
 .board-tile {
-  width: 50px;
-  height: 50px;
+  width: var(--tile-dim);
+  height: var(--tile-dim);
   background-color: #cda688ff;
   position: relative;
   display: flex;
@@ -29,8 +111,8 @@
   inset: 0;
   background: #d0be39;
   opacity: 0;
-  width: 50px;
-  height: 50px;
+  width: var(--tile-dim);
+  height: var(--tile-dim);
 }
 
 .board-tile:hover::after {
@@ -38,5 +120,71 @@
 }
 
 .piece {
-  position: absolute;
+  width: calc(var(--tile-dim) - 15px);
+}
+
+/* Media Queries */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --secondary: #2a2a2a;
+    --tertiary: #434343;
+    --text: #f1f1f1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .game-page {
+    flex-direction: row;
+  }
+
+  :root {
+    --header-height: 100px;
+    /* Game Page */
+    --board-top-padding: 2rem;
+    --board-padding: 3rem;
+    --tile-dim: 65px;
+  }
+}
+
+@media (max-width: 900px) {
+  .game-page {
+    flex-direction: column;
+  }
+
+  :root {
+    /* User */
+    --usercard-height: 7rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-page {
+    flex-direction: column;
+  }
+
+  :root {
+    --header-height: 70px;
+    /* User */
+    --usercard-height: 7rem;
+    /* Game Page */
+    --board-top-padding: 1rem;
+    --board-padding: 2rem;
+    --tile-dim: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .game-page {
+    flex-direction: column;
+  }
+
+  :root {
+    --header-height: 60px;
+    /* User */
+    --usercard-height: 7rem;
+    /* Game Page */
+    --board-top-padding: 1rem;
+    --board-padding: 2rem;
+    --tile-dim: 40px;
+  }
 }

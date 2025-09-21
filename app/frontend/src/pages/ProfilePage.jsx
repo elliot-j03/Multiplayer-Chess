@@ -1,15 +1,12 @@
-//React
-import { useNavigate } from "react-router-dom"
+// Components
+import Header from "../components/Misc/Header";
 
 function ProfilePage () {
-    // Variables
-    const homePath = "/";
-    const navigate = useNavigate();
 
     return (
         <>
+            <Header />
             <h1>Profile</h1>
-            <button onClick={() => navigate(homePath)}>Home</button>
         </>
     )
 }

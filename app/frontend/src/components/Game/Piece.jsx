@@ -13,7 +13,6 @@ import blackKnight from "../../assets/pieces/black_knight.png";
 import whiteKnight from "../../assets/pieces/white_knight.png";
 
 function Piece ({ pieceType, pieceColour }) {
-    
     const pieceMap = {
         pawn: [whitePawn, blackPawn, "Pawn"],
         king: [whiteKing, blackKing, "King"],
@@ -27,8 +26,8 @@ function Piece ({ pieceType, pieceColour }) {
 
     if (!pieceImage) return null;
     return (
-        <div className="piece">
-            <img src={pieceImage} alt={pieceAlt} width="30px"/>
+        <div style={{ position: "absolute" }}>
+            <img className="piece" src={pieceImage} alt={pieceAlt}/>
         </div>
     );
 }
