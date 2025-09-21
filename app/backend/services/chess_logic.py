@@ -48,19 +48,26 @@ def fen_to_json(board_fen):
 
 # Validating the move of the client
 def move_auth(prev_tile: str, req_tile: str):
-    try:
-        move = chess.Move.from_uci(prev_tile + req_tile)
-    except Exception as e:
-        print(f"[ERROR] chess_logic.py/move_auth: {e}")
-        return None, False
-
-    # TODO: Fix inconsisten check state
     is_check: bool = False
     piece_moved: bool = False
+    move_str: str = prev_tile + req_tile
+
+    try:
+        if (prev_tile[1] == "7" and req_tile[1] == "8" and board.piece_at(chess.parse_square(prev_tile)).symbol() == "P"):
+            move_str += "q" 
+        elif (prev_tile[1] == "2" and req_tile[1] == "1" and board.piece_at(chess.parse_square(prev_tile)).symbol() == "p"):
+            move_str += "q"
+            
+        move = chess.Move.from_uci(move_str)
+    except Exception as e:
+        print(f"[ERROR] chess_logic.py/move_auth: {e}")
+        return None, piece_moved, is_check 
+
+    # TODO: Fix inconsistent check state
     if move in board.legal_moves:
         piece_moved = True
         board.push(move)
-        
+
         if board.is_check():
             is_check = True
         return fen_to_json(board.fen()), piece_moved, is_check
