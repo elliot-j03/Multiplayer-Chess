@@ -4,6 +4,7 @@
   --button-sec: #558360;
   --secondary: #c4c5ba;
   --tertiary: #a7a8a3;
+  --highlight: #6fa44b;
   --text: #222;
   --border-radius: 5px;
   --header-height: 100px;
@@ -128,6 +129,7 @@ button:hover {
   :root {
     --secondary: #2a2a2a;
     --tertiary: #434343;
+    --highlight: #ffffff;
     --text: #f1f1f1;
   }
 }

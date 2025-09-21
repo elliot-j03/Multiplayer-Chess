@@ -21,9 +21,8 @@ export function sendPieceMove(previousTile, requestedTile) {
             ws.addEventListener("message", (event) => {
                 const data = JSON.parse(event.data);
                 const newBoardState = data.boardState;
-                const change = data.change;
-                const isCheck = data.isCheck;
-                resolve({ state: newBoardState, change: change, check: isCheck });
+                const gameState = data.gameState;
+                resolve({ boardState: newBoardState, gameState: gameState});
             }, { once: true });
         });
     } catch (err) {

@@ -12,9 +12,9 @@ function Header () {
                 <div style={{ display: "flex", flexDirection: "row", flex: "5" }}>
                     <div style={{ padding: "0.5rem" }}>
                         <button style={{ padding: "7px", display: "flex", flexDirection: "column" }}>
-                            <div className="menu-button-div"></div>
-                            <div className="menu-button-div"></div>
-                            <div className="menu-button-div"></div>
+                            <div className="menu-button-div" />
+                            <div className="menu-button-div" />
+                            <div className="menu-button-div" />
                         </button>
                     </div>
                     <div style={{ padding: "0.5rem" }}>

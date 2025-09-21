@@ -1,8 +1,8 @@
 // FRONTEND //
 UI design for all pages
+Keep track of taken pieces
 
 // BACKEND //
-Fix Check state
 Set up database
 Add authorisations using IDs
 Limit socket to two different clients

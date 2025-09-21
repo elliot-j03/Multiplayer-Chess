@@ -12,7 +12,12 @@ function GamePage () {
     const [boardType, setBoardType] = useState("white");
     const [boardState, setBoardState] = useState(startingBoardState);
     const [selectedTile, setSelectedTile] = useState("");
+    // Game state
     const [isCheck, setIsCheck] = useState(false);
+    const [isCheckMate, setIsCheckMate] = useState(false);
+    const [isStaleMate, setIsStaleMate] = useState(false);
+    const [isInsuffMats, setIsInsuffMats] = useState(false);
+    const [turnColour, setTurnColour] = useState(true);
 
 
     async function handleTileClick (newTileID) {
@@ -21,12 +26,14 @@ function GamePage () {
             try {
                 const moveResponse = await sendPieceMove(selectedTile, newTileID);
                 
-                console.log("CHANGE: " + moveResponse?.change);
-                console.log("CHECK: " + moveResponse?.check);
-                setIsCheck(moveResponse?.check);
+                setIsCheck(moveResponse?.gameState?.isCheck);
+                setIsCheckMate(moveResponse?.gameState?.isCheckMate);
+                setIsStaleMate(moveResponse?.gameState?.isStaleMate);
+                setIsInsuffMats(moveResponse?.gameState?.isInsufficientMaterial);
+                setTurnColour(moveResponse?.gameState?.turnColour);
 
-                if (moveResponse?.change === true) {
-                    setBoardState(moveResponse.state);
+                if (moveResponse?.gameState?.pieceMoved === true) {
+                    setBoardState(moveResponse.boardState);
                 }
                 setSelectedTile("");
             } catch (err) {
@@ -47,8 +54,9 @@ function GamePage () {
                 <PlayerCard 
                 username={"player 2"}
                 friendState={"add"}
-                pieceColour={"black"}
-                capturedPieces={"none"}/>
+                pieceColour={false}
+                capturedPieces={"none"}
+                turnColour={turnColour}/>
                 <div className="board-container">
                     <GameBoard boardType={boardType}
                     boardState={boardState}
@@ -58,8 +66,9 @@ function GamePage () {
                 <PlayerCard 
                 username={"player 1"}
                 friendState={"add"}
-                pieceColour={"white"}
-                capturedPieces={"none"}/>
+                pieceColour={true}
+                capturedPieces={"none"}
+                turnColour={turnColour}/>
                 <h1>{isCheck ? "Check!" : ""}</h1>
             </div>
         </>

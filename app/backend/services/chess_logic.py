@@ -16,10 +16,30 @@ PIECE_MAP: dict = {
     "n": ["knight", "b"]
 }
 board = chess.Board()
-        
+
+
+# Saves the state of the game
+class GameState():
+    def __init__(self):
+        self.is_check: bool = False
+        self.is_checkmate: bool = False
+        self.is_stalemate: bool = False
+        self.is_insuff_mats: bool = False
+        self.turn_colour: bool = True
+
+game_state = GameState()
+
+
+def state_check() -> None:
+    game_state.is_check = board.is_check()
+    game_state.is_checkmate = board.is_checkmate()
+    game_state.is_stalemate = board.is_stalemate()
+    game_state.is_insuff_mats = board.is_insufficient_material()
+    game_state.turn_colour = board.turn
+
 
 # Converting the FEN string to JSON
-def fen_to_json(board_fen):
+def fen_to_json(board_fen) -> dict:
     board_state: dict = {}
     tile_count: int = 0
     row_count: int = 0
@@ -45,10 +65,8 @@ def fen_to_json(board_fen):
     return board_state
 
 
-
 # Validating the move of the client
-def move_auth(prev_tile: str, req_tile: str):
-    is_check: bool = False
+def move_auth(prev_tile: str, req_tile: str) -> tuple:
     piece_moved: bool = False
     move_str: str = prev_tile + req_tile
 
@@ -59,17 +77,29 @@ def move_auth(prev_tile: str, req_tile: str):
             move_str += "q"
             
         move = chess.Move.from_uci(move_str)
+
+        if move in board.legal_moves:
+            piece_moved = True
+            board.push(move)
+    
+            state_check()
+
+            return fen_to_json(board.fen()), {
+                "pieceMoved": piece_moved,
+                "turnColour": game_state.turn_colour,
+                "isCheck": game_state.is_check,
+                "isCheckMate": game_state.is_checkmate,
+                "isStaleMate": game_state.is_stalemate,
+                "isInsufficientMaterial": game_state.is_insuff_mats
+            }
     except Exception as e:
         print(f"[ERROR] chess_logic.py/move_auth: {e}")
-        return None, piece_moved, is_check 
-
-    # TODO: Fix inconsistent check state
-    if move in board.legal_moves:
-        piece_moved = True
-        board.push(move)
-
-        if board.is_check():
-            is_check = True
-        return fen_to_json(board.fen()), piece_moved, is_check
-    else:
-        return None, piece_moved, is_check
+    
+    return None, {
+        "pieceMoved": piece_moved,
+        "turnColour": game_state.turn_colour,
+        "isCheck": game_state.is_check,
+        "isCheckMate": game_state.is_checkmate,
+        "isStaleMate": game_state.is_stalemate,
+        "isInsufficientMaterial": game_state.is_insuff_mats
+    } 
