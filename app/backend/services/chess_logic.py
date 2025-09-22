@@ -66,16 +66,10 @@ def fen_to_json(board_fen) -> dict:
 
 
 # Validating the move of the client
-def move_auth(prev_tile: str, req_tile: str) -> tuple:
+def move_auth(move_str: str) -> tuple:
     piece_moved: bool = False
-    move_str: str = prev_tile + req_tile
 
-    try:
-        if (prev_tile[1] == "7" and req_tile[1] == "8" and board.piece_at(chess.parse_square(prev_tile)).symbol() == "P"):
-            move_str += "q" 
-        elif (prev_tile[1] == "2" and req_tile[1] == "1" and board.piece_at(chess.parse_square(prev_tile)).symbol() == "p"):
-            move_str += "q"
-            
+    try:    
         move = chess.Move.from_uci(move_str)
 
         if move in board.legal_moves:

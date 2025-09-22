@@ -6,12 +6,16 @@ import { useState } from "react";
 import Header from "../components/Misc/Header";
 import PlayerCard from "../components/User/PlayerCard";
 import GameBoard from "../components/Game/GameBoard";
+import PromotionSelect from "../components/Game/PromotionSelect";
 import { startingBoardState } from "../components/Game/BoardData";
 
 function GamePage () {
     const [boardType, setBoardType] = useState("white");
     const [boardState, setBoardState] = useState(startingBoardState);
-    const [selectedTile, setSelectedTile] = useState("");
+    const [prevTile, setPrevTile] = useState("");
+    const [prevPiece, setPrevPiece] = useState("");
+    const [promotionInView, setPromotionInView] = useState(false);
+    const [pendingMove, setPendingMove] = useState("");
     // Game state
     const [isCheck, setIsCheck] = useState(false);
     const [isCheckMate, setIsCheckMate] = useState(false);
@@ -20,30 +24,63 @@ function GamePage () {
     const [turnColour, setTurnColour] = useState(true);
 
 
-    async function handleTileClick (newTileID) {
-        if (selectedTile !== "") {
+    async function handleTileClick (newTile, pieceType) {
+        if (prevTile !== "") {
             // Logic on previously selected tile
+            let moveStr = prevTile + newTile;
             try {
-                const moveResponse = await sendPieceMove(selectedTile, newTileID);
-                
-                setIsCheck(moveResponse?.gameState?.isCheck);
-                setIsCheckMate(moveResponse?.gameState?.isCheckMate);
-                setIsStaleMate(moveResponse?.gameState?.isStaleMate);
-                setIsInsuffMats(moveResponse?.gameState?.isInsufficientMaterial);
-                setTurnColour(moveResponse?.gameState?.turnColour);
-
-                if (moveResponse?.gameState?.pieceMoved === true) {
-                    setBoardState(moveResponse.boardState);
+                if ((prevTile[1] === "7" && newTile[1] === "8" && prevPiece === "pawn") ||
+                    (prevTile[1] === "2" && newTile[1] === "1" && prevPiece === "pawn")) {
+                    setPromotionInView(true);
+                    setPendingMove(moveStr);
+                    return;
                 }
-                setSelectedTile("");
+                
+                await sendAndUpdate(moveStr);
+
             } catch (err) {
                 console.log("[ERROR] GameBoard.jsx/handleTileClick: " + err);
-                setSelectedTile("");
+                setPrevTile("");
+                setPrevPiece("");
             }
         } else {
             // Selecting a tile
-            setSelectedTile(newTileID);
+            setPrevTile(newTile);
+            setPrevPiece(pieceType);
         }
+    }
+
+    async function sendAndUpdate(moveStr) {
+        const moveResponse = await sendPieceMove(moveStr);
+
+        setIsCheck(moveResponse?.gameState?.isCheck);
+        setIsCheckMate(moveResponse?.gameState?.isCheckMate);
+        setIsStaleMate(moveResponse?.gameState?.isStaleMate);
+        setIsInsuffMats(moveResponse?.gameState?.isInsufficientMaterial);
+        setTurnColour(moveResponse?.gameState?.turnColour);
+
+        if (moveResponse?.gameState?.pieceMoved) {
+            setBoardState(moveResponse.boardState);
+        }
+
+        setPrevTile("");
+        setPrevPiece("");
+    }
+
+
+    async function handlePromotion (pieceSelection) {
+        if (!pendingMove) return;
+
+        const moveStr = pendingMove + pieceSelection;
+        try {
+            await sendAndUpdate(moveStr);
+        } catch (err) {
+            console.log("[ERROR] GamePage.jsx/handlePromotion: " + err);
+            setPrevTile("");
+            setPrevPiece("");
+            setPendingMove("");
+        }
+        setPromotionInView(false);
     }
 
 
@@ -60,7 +97,7 @@ function GamePage () {
                 <div className="board-container">
                     <GameBoard boardType={boardType}
                     boardState={boardState}
-                    selectedTile={selectedTile} 
+                    selectedTile={prevTile} 
                     onPieceMove={handleTileClick}/>
                 </div>
                 <PlayerCard 
@@ -70,6 +107,8 @@ function GamePage () {
                 capturedPieces={"none"}
                 turnColour={turnColour}/>
                 <h1>{isCheck ? "Check!" : ""}</h1>
+                {promotionInView ? <PromotionSelect handleDecision={handlePromotion} pieceColour={true}/> :
+                null}
             </div>
         </>
     )

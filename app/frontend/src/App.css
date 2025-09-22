@@ -1,21 +1,3 @@
-/* Variables */
-:root {
-  --button-prm: #2b9348;
-  --button-sec: #558360;
-  --secondary: #c4c5ba;
-  --tertiary: #a7a8a3;
-  --highlight: #6fa44b;
-  --text: #222;
-  --border-radius: 5px;
-  --header-height: 100px;
-  /* User */
-  --usercard-height: 25rem;
-  /* Game Page */
-  --board-top-padding: 2rem;
-  --board-padding: 3rem;
-  --tile-dim: 70px;
-}
-
 /* Misc */
 header {
   height: var(--header-height);
@@ -122,6 +104,25 @@ button:hover {
 
 .piece {
   width: calc(var(--tile-dim) - 15px);
+}
+
+.promotion-select {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg);
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
+}
+
+.promotion-select-row {
+  display: flex;
+  flex-direction: row;
+  background-color: var(--bg);
+  padding: 0.5rem;
+  border-radius: var(--border-radius);
 }
 
 /* Media Queries */

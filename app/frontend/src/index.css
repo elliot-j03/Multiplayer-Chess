@@ -1,16 +1,25 @@
 /* Variables */
 :root {
-  --primary: #2d6cdf;
-  --secondary: #f4f4f4;
+  --secondary: #c4c5ba;
+  --tertiary: #a7a8a3;
+  --bg: #e4e4de;
+  --button-prm: #2b9348;
+  --button-sec: #558360;
+  --highlight: #6fa44b;
   --accent: #e63946;
   --text: #222;
   --text-light: #666;
-  --bg: #e4e4de;
-  --border-radius: 6px;
+  --border-radius: 5px;
+  --header-height: 100px;
+  /* User */
+  --usercard-height: 25rem;
+  /* Game Page */
+  --board-top-padding: 2rem;
+  --board-padding: 3rem;
+  --tile-dim: 70px;
 }
 
 /* Base styling */
-
 * {
   margin: 0;
   padding: 0;

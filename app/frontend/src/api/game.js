@@ -5,11 +5,10 @@ const gameMovePath = `${BASE_URL}/game/client-socket`
 
 var ws = new WebSocket(gameMovePath);
 
-export function sendPieceMove(previousTile, requestedTile) {
+export function sendPieceMove(moveStr) {
     try {
         const data = {
-            "prev_tile": previousTile,
-            "req_tile": requestedTile
+            "move_str": moveStr
         }
         ws.send(JSON.stringify(data));
 

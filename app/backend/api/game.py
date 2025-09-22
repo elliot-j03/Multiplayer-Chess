@@ -19,10 +19,9 @@ async def game_socket(websocket: WebSocket):
         data = await websocket.receive_text()
         data = json.loads(data)
         
-        prev_tile = data["prev_tile"]
-        req_tile = data["req_tile"]
+        move_str: str = data["move_str"]
 
-        new_board_state, game_state = move_auth(prev_tile, req_tile)
+        new_board_state, game_state = move_auth(move_str)
         await websocket.send_text(json.dumps({
             "boardState": new_board_state,
             "gameState": game_state}))

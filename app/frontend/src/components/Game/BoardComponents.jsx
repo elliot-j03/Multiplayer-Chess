@@ -6,7 +6,13 @@ function BoardTile({ tileType, tileNum, tileLetter, piece, onTileSelect, selecte
 
     return (
         <div className={`board-tile ${tileType === "dark" ? "dark" : ""}`}
-            onClick={() => onTileSelect(tileID)}
+            onClick={() => {
+                if (piece === null) {
+                    onTileSelect(tileID, "_");
+                } else {
+                    onTileSelect(tileID, piece[0]);
+                }
+            }}
             style={{ backgroundColor: (selectedTile === tileID ? "#c75656ff" : null) }}>
             {piece !== undefined && piece !== null ? <Piece pieceType={piece[0]} pieceColour={piece[1]}/> : null}
         </div>
