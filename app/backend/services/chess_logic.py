@@ -30,7 +30,7 @@ class GameState():
 game_state = GameState()
 
 
-def state_check() -> None:
+def state_update() -> None:
     game_state.is_check = board.is_check()
     game_state.is_checkmate = board.is_checkmate()
     game_state.is_stalemate = board.is_stalemate()
@@ -65,6 +65,43 @@ def fen_to_json(board_fen) -> dict:
     return board_state
 
 
+# Checking if piece is taken
+def captured_piece_check(move_str: str) -> list:
+    target_squ = move_str[2:]
+
+    try:
+        move = chess.Move.from_uci(move_str)
+        if board.is_en_passant(move):
+            if game_state.turn_colour:
+                attacked_squ = target_squ[0] + str(int(target_squ[1]) - 1)
+            else:
+                attacked_squ = target_squ[0] + str(int(target_squ[1]) + 1)
+            
+            piece = board.piece_at(chess.parse_square(attacked_squ))
+        else:
+            piece = board.piece_at(chess.parse_square(target_squ))
+
+        if piece is not None:
+            pieces: dict = {
+                "q": "queen",
+                "b": "bishop",
+                "n": "knight",
+                "r": "rook",
+                "p": "pawn"
+            }
+            colours: dict = {True: "w", False: "b"}
+            p: str = str(piece).lower()
+            colour = not game_state.turn_colour
+            
+            return [pieces[p], colours[colour]]
+        # Returns None if no piece captured
+        return None
+    except Exception as e:
+        print(f"[ERROR] chess_logic.py/captured_piece_check: {e}")
+        return None
+    
+
+
 # Validating the move of the client
 def move_auth(move_str: str) -> tuple:
     piece_moved: bool = False
@@ -74,12 +111,14 @@ def move_auth(move_str: str) -> tuple:
 
         if move in board.legal_moves:
             piece_moved = True
+            piece_captured = captured_piece_check(move_str)
             board.push(move)
     
-            state_check()
+            state_update()
 
             return fen_to_json(board.fen()), {
                 "pieceMoved": piece_moved,
+                "capturedPiece": piece_captured,
                 "turnColour": game_state.turn_colour,
                 "isCheck": game_state.is_check,
                 "isCheckMate": game_state.is_checkmate,
@@ -91,9 +130,10 @@ def move_auth(move_str: str) -> tuple:
     
     return None, {
         "pieceMoved": piece_moved,
+        "capturedPiece": None,
         "turnColour": game_state.turn_colour,
         "isCheck": game_state.is_check,
         "isCheckMate": game_state.is_checkmate,
         "isStaleMate": game_state.is_stalemate,
         "isInsufficientMaterial": game_state.is_insuff_mats
-    } 
+    }

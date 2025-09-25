@@ -34,17 +34,17 @@ class TestGameLogic(unittest.TestCase):
         self.assertIsInstance(result, tuple)
         self.assertEqual(len(result), 2)
 
-        first_value, info = result
-        self.assertIsInstance(first_value, dict)
+        fen_str, game_state = result
+        self.assertIsInstance(fen_str, dict)
 
         expected_keys = {
-            "pieceMoved", "turnColour", "isCheck",
+            "pieceMoved", "capturedPiece", "turnColour", "isCheck",
             "isCheckMate", "isStaleMate", "isInsufficientMaterial"
         }
-        self.assertEqual(set(info.keys()), expected_keys)
+        self.assertEqual(set(game_state.keys()), expected_keys)
 
         for key in ["isCheck", "isCheckMate", "isStaleMate", "isInsufficientMaterial"]:
-            self.assertIsInstance(info[key], bool)
+            self.assertIsInstance(game_state[key], bool)
 
     def test_invalid_move(self):
         move: str = "e7e8"
@@ -53,15 +53,15 @@ class TestGameLogic(unittest.TestCase):
         self.assertIsInstance(result, tuple)
         self.assertEqual(len(result), 2)
 
-        first_value, info = result
-        self.assertEqual(first_value, None)
+        fen_str, game_state = result
+        self.assertEqual(fen_str, None)
 
         expected_keys = {
-            "pieceMoved", "turnColour", "isCheck",
+            "pieceMoved", "capturedPiece", "turnColour", "isCheck",
             "isCheckMate", "isStaleMate", "isInsufficientMaterial"
         }
-        self.assertEqual(set(info.keys()), expected_keys)
+        self.assertEqual(set(game_state.keys()), expected_keys)
 
         for key in ["isCheck", "isCheckMate", "isStaleMate", "isInsufficientMaterial"]:
-            self.assertIsInstance(info[key], bool)
+            self.assertIsInstance(game_state[key], bool)
 

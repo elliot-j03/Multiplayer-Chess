@@ -106,6 +106,10 @@ button:hover {
   width: calc(var(--tile-dim) - 15px);
 }
 
+.piece-mini {
+  width: calc(var(--tile-dim) - 40px);
+}
+
 .promotion-select {
   position: absolute;
   display: flex;

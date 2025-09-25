@@ -22,6 +22,8 @@ function GamePage () {
     const [isStaleMate, setIsStaleMate] = useState(false);
     const [isInsuffMats, setIsInsuffMats] = useState(false);
     const [turnColour, setTurnColour] = useState(true);
+    const [whitePiecesTaken, setWhitePiecesTaken] = useState([]);
+    const [blackPiecesTaken, setBlackPiecesTaken] = useState([]);
 
 
     async function handleTileClick (newTile, pieceType) {
@@ -59,6 +61,12 @@ function GamePage () {
         setIsInsuffMats(moveResponse?.gameState?.isInsufficientMaterial);
         setTurnColour(moveResponse?.gameState?.turnColour);
 
+        const capPiece = moveResponse?.gameState?.capturedPiece;
+        if (capPiece !== null) {
+            capPiece[1] === "w" ? setWhitePiecesTaken(prev => [...prev, capPiece]) :
+            setBlackPiecesTaken(prev => [...prev, capPiece])
+        }
+
         if (moveResponse?.gameState?.pieceMoved) {
             setBoardState(moveResponse.boardState);
         }
@@ -92,7 +100,7 @@ function GamePage () {
                 username={"player 2"}
                 friendState={"add"}
                 pieceColour={false}
-                capturedPieces={"none"}
+                capturedPieces={whitePiecesTaken}
                 turnColour={turnColour}/>
                 <div className="board-container">
                     <GameBoard boardType={boardType}
@@ -104,7 +112,7 @@ function GamePage () {
                 username={"player 1"}
                 friendState={"add"}
                 pieceColour={true}
-                capturedPieces={"none"}
+                capturedPieces={blackPiecesTaken}
                 turnColour={turnColour}/>
                 <h1>{isCheck ? "Check!" : ""}</h1>
                 {promotionInView ? <PromotionSelect handleDecision={handlePromotion} pieceColour={true}/> :

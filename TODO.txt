@@ -1,9 +1,11 @@
 // FRONTEND //
 UI design for all pages
-Keep track of taken pieces
+Save the game state locally so browser refresh does not impact frontend state
+Set up testing
 
 // BACKEND //
 Set up database
 Add authorisations using IDs
 Limit socket to two different clients
 Set up containers
+Set up testing
