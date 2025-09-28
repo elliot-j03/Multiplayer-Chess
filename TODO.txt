@@ -1,9 +1,11 @@
 // FRONTEND //
 UI design for all pages
-Save the game state locally so browser refresh does not impact frontend state
 Set up testing
+Add matchpool addition => add timer to keep track of how long the wait has been
 
 // BACKEND //
+Matchmaking
+handle game ending by reseting board?
 Set up database
 Add authorisations using IDs
 Limit socket to two different clients

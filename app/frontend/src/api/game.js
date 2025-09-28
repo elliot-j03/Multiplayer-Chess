@@ -1,6 +1,9 @@
-const BASE_URL = import.meta.env.VITE_API_WS;
+const BASE_URL_WS = import.meta.env.VITE_API_WS;
+const BASE_URL_API = import.meta.env.VITE_API_URL
 // Paths
-const gameMovePath = `${BASE_URL}/game/client-socket`
+const gameMovePath = `${BASE_URL_WS}/game/client-socket`;
+const gameSearchPath = `${BASE_URL_API}/game/match-search`;
+const gameCancelPath = `${BASE_URL_API}/game/match-search/cancel`;
 
 
 var ws = new WebSocket(gameMovePath);
@@ -27,4 +30,34 @@ export function sendPieceMove(moveStr) {
     } catch (err) {
         console.log("[ERROR] game.js/sendPieceMove: " + err);
     }
+}
+
+
+export async function searchForGame(userID) {
+    const response = await fetch(gameSearchPath,
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "client_uid": userID,
+            })
+        }
+    );
+    const data = await response.json();
+    return data;
+}
+
+
+export async function cancelSearch(userID) {
+    const response = await fetch(gameCancelPath,
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                "client_uid": userID,
+            })
+        }
+    );
+    const data = await response.json();
+    return data;
 }

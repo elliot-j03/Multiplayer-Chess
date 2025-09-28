@@ -1,15 +1,29 @@
 import json
 from fastapi import WebSocket, APIRouter
 from services.chess_logic import move_auth
-from api.schemas import RequestMatch
+from services.match_pool import MatchPool
+from api.schemas import Matchmaking
 
 
 game_router = APIRouter()
 
 
+mp = MatchPool()
+
 @game_router.post("/game/match-search")
-async def match_search(data: RequestMatch):
-    pass
+async def match_search(data: Matchmaking):
+    uid: str = data.client_uid
+
+    match_state: dict = mp.add_plyr(uid)
+    return match_state
+
+
+@game_router.post("/game/match-search/cancel")
+async def cancel_search(data: Matchmaking):
+    uid: str = data.client_uid
+
+    request_outcome: dict = mp.cancel_search(uid)
+    return request_outcome
 
 
 @game_router.websocket("/game/client-socket")

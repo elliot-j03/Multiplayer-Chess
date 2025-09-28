@@ -7,6 +7,7 @@ client = TestClient(app)
 
 
 class TestAuthEndpoints(unittest.TestCase):
+    
     def test_user_create(self):
         response = client.post(
             "/auth/create",

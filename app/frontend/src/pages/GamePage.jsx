@@ -48,12 +48,11 @@ function GamePage () {
     // Logic on game conclusion
     useEffect(() => {
         if (isCheckMate) {
-            setGameConclusion("");
+            setGameConclusion("Checkmate");
         } else if (isStaleMate) {
-            setGameConclusion("");
-        }
-        else if (isInsuffMats) {
-            setGameConclusion("");
+            setGameConclusion("Stalemate");
+        } else if (isInsuffMats) {
+            setGameConclusion("Insufficient Material");
         }
 
         localStorage.removeItem(boardStateKey);

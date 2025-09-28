@@ -34,8 +34,8 @@ class TestGameLogic(unittest.TestCase):
         self.assertIsInstance(result, tuple)
         self.assertEqual(len(result), 2)
 
-        fen_str, game_state = result
-        self.assertIsInstance(fen_str, dict)
+        board_state, game_state = result
+        self.assertIsInstance(board_state, dict)
 
         expected_keys = {
             "pieceMoved", "capturedPiece", "turnColour", "isCheck",
@@ -53,8 +53,8 @@ class TestGameLogic(unittest.TestCase):
         self.assertIsInstance(result, tuple)
         self.assertEqual(len(result), 2)
 
-        fen_str, game_state = result
-        self.assertEqual(fen_str, None)
+        board_state, game_state = result
+        self.assertEqual(board_state, None)
 
         expected_keys = {
             "pieceMoved", "capturedPiece", "turnColour", "isCheck",
