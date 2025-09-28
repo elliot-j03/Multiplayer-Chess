@@ -16,9 +16,9 @@ function GameBoard ({ boardType, boardState, selectedTile, onPieceMove }) {
                 selectedTile={selectedTile} />
             ))}
             </div>
-            <p>selected tile: {selectedTile}</p>
+            {/* <p>selected tile: {selectedTile}</p> */}
         </>
-    )
+    )   
 }
 
 export default GameBoard;
