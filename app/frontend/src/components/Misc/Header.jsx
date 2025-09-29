@@ -1,10 +1,14 @@
 // React
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Header () {
+function Header ({ page }) {
     const homePath = "/";
     const profilePath = "/profile";
+    const authPath = "/auth";
     const navigate = useNavigate();
+
+    const [loginState, setLoginState] = useState(false);
 
     return (
         <>
@@ -24,11 +28,17 @@ function Header () {
                     </div>
                 </div>
                 <div style={{ display: "flex", flex: "1", justifyContent: "right"}}>
-                    <div className="pfp-container">
-                        <button onClick={() => navigate(profilePath)}>
-                            <img src="" alt="pfp" />
-                        </button>
-                    </div>
+                    {page === "auth" ? null :
+                        <div className="pfp-container">
+                            {loginState ? 
+                                <button onClick={() => navigate(profilePath)}>
+                                    <img src="" alt="pfp" />
+                                </button>
+                                :
+                                <button onClick={() => navigate(authPath)}>Login</button>
+                            }
+                        </div>
+                    }
                 </div>
             </header>
         </>

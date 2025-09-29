@@ -5,7 +5,7 @@ function ProfilePage () {
 
     return (
         <>
-            <Header />
+            <Header page={"profile"} />
             <h1>Profile</h1>
         </>
     )

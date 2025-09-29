@@ -43,7 +43,7 @@ function AuthPage () {
 
     return (
         <>
-            <Header />
+            <Header page={"auth"} />
             <h1>Login Page</h1>
             <div style={{ display: "flex", flexDirection: "column", width: "200px" }}>
                 <input onChange={(e) => setUsername(e.target.value)} placeholder="username" value={username}/>

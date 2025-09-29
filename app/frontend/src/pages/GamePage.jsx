@@ -128,7 +128,7 @@ function GamePage () {
     try {
         return (
             <>
-                <Header />
+                <Header page={"game"} />
                 <div className="game-page">
                     <PlayerCard 
                     username={"player 2"}

@@ -1,5 +1,5 @@
 const BASE_URL_WS = import.meta.env.VITE_API_WS;
-const BASE_URL_API = import.meta.env.VITE_API_URL
+const BASE_URL_API = import.meta.env.VITE_API_URL;
 // Paths
 const gameMovePath = `${BASE_URL_WS}/game/client-socket`;
 const gameSearchPath = `${BASE_URL_API}/game/match-search`;
