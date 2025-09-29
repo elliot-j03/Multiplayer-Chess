@@ -37,8 +37,10 @@ function HomePage () {
 
 
     useEffect(() => {
-        if (searchTimeout) setSearchState(false);
-        console.log("change");
+        if (searchTimeout) {
+            setSearchState(false);
+            stopMatchSearch();
+        }
     },[searchTimeout]);
 
     
